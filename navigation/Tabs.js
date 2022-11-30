@@ -3,6 +3,10 @@ import styled from "styled-components/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useColorScheme } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { BLACK_COLOR, YELLOW_COLOR, DARK_GREY, LIGHT_GREY } from "./../colors";
+import Movies from "./../screens/Movies";
+import Tv from "./../screens/Tv";
+import Search from "./../screens/Search";
 
 const Tabs = () => {
   const Tab = createBottomTabNavigator();

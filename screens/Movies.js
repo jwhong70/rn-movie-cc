@@ -6,6 +6,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { moviesApi } from "./../api";
 import Loader from "./../components/Loader";
 import Slide from "../components/Slide";
+import HList from "../components/HList";
 
 const Container = styled.ScrollView``;
 
@@ -59,6 +60,7 @@ const Movies = () => {
           />
         ))}
       </Swiper>
+      <HList title="Trending Movies" data={trendingData.results} />
     </Container>
   );
 };

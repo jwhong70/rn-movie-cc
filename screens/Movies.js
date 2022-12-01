@@ -5,6 +5,7 @@ import { Dimensions, View } from "react-native";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { moviesApi } from "./../api";
 import Loader from "./../components/Loader";
+import Slide from "../components/Slide";
 
 const Container = styled.ScrollView``;
 
@@ -47,7 +48,16 @@ const Movies = () => {
           height: SCREEN_HEIGHT / 4,
         }}
       >
-        <View></View>
+        {nowPlayingData.results.map((movie) => (
+          <Slide
+            key={movie.id}
+            backdropPath={movie.backdrop_path}
+            posterPath={movie.poster_path}
+            originalTitle={movie.original_title}
+            voteAverage={movie.vote_average}
+            overview={movie.overview}
+          />
+        ))}
       </Swiper>
     </Container>
   );

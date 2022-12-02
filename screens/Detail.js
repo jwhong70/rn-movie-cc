@@ -5,6 +5,11 @@ import { makeImgPath } from "./../utils";
 import { LinearGradient } from "expo-linear-gradient";
 import { BLACK_COLOR } from "./../colors";
 import Poster from "../components/Poster";
+import { useQuery } from "@tanstack/react-query";
+import { moviesApi, tvApi } from "./../api";
+import Loader from "./../components/Loader";
+import * as WebBrowser from "expo-web-browser";
+import { Ionicons } from "@expo/vector-icons";
 
 const { height: SCREEN_HEIGHT } = Dimensions.get("window");
 
@@ -35,10 +40,29 @@ const Overview = styled.Text`
   color: ${(props) => props.theme.textColor};
   margin: 20px 0px;
 `;
+const VideoBtn = styled.TouchableOpacity`
+  flex-direction: row;
+`;
+const BtnText = styled.Text`
+  color: white;
+  font-weight: 600;
+  margin-bottom: 10px;
+  line-height: 24px;
+  margin-left: 10px;
+`;
 const Detail = ({ navigation: { setOptions }, route: { params } }) => {
   useEffect(() => {
     setOptions({ title: "original_title" in params ? "Movie" : "TV Show" });
   }, []);
+  const isMovie = "original_title" in params;
+  const { isLoading, data } = useQuery(
+    [isMovie ? "movies" : "tv", params.id],
+    isMovie ? moviesApi.detail : tvApi.detail
+  );
+  const openYTLink = async (videoID) => {
+    const baseUrl = `https://m.youtube.com/watch?v=${videoID}`;
+    await WebBrowser.openBrowserAsync(baseUrl);
+  };
   return (
     <Container>
       <Header>
@@ -61,6 +85,15 @@ const Detail = ({ navigation: { setOptions }, route: { params } }) => {
       </Header>
       <Data>
         <Overview>{params.overview}</Overview>
+        {isLoading ? <Loader /> : null}
+        {data?.videos?.results?.map((video) =>
+          video.site === "YouTube" ? (
+            <VideoBtn key={video.key} onPress={() => openYTLink(video.key)}>
+              <Ionicons name="logo-youtube" color="white" size={24} />
+              <BtnText>{video.name}</BtnText>
+            </VideoBtn>
+          ) : null
+        )}
       </Data>
     </Container>
   );

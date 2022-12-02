@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import styled from "styled-components/native";
 import { useQuery } from "@tanstack/react-query";
 import { moviesApi, tvApi } from "./../api";
+import Loader from "./../components/Loader";
+import HList from "./../components/HList";
 
 const Container = styled.ScrollView``;
 const SearchBar = styled.TextInput`
@@ -34,6 +36,7 @@ const Search = () => {
     searchMovies();
     searchTv();
   };
+  const loading = moviesLoading || tvLoading;
   return (
     <Container>
       <SearchBar
@@ -43,6 +46,11 @@ const Search = () => {
         onChangeText={onChangeText}
         onSubmitEditing={onSubmit}
       />
+      {loading ? <Loader /> : null}
+      {moviesData ? (
+        <HList title="Movie Results" data={moviesData.results} />
+      ) : null}
+      {tvData ? <HList title="TV Results" data={tvData.results} /> : null}
     </Container>
   );
 };

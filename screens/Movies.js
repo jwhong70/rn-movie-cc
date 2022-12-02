@@ -9,6 +9,8 @@ import Slide from "../components/Slide";
 import HList from "../components/HList";
 import HMedia from "../components/HMedia";
 
+const { height: SCREEN_HEIGHT } = Dimensions.get("window");
+
 const Container = styled.ScrollView``;
 const ComingSoonTitle = styled.Text`
   color: white;
@@ -19,7 +21,6 @@ const ComingSoonTitle = styled.Text`
 `;
 
 const Movies = () => {
-  const { height: SCREEN_HEIGHT } = Dimensions.get("window");
   const { isLoading: nowPlayingLoading, data: nowPlayingData } = useQuery(
     ["movies", "nowPlaying"],
     moviesApi.nowPlaying

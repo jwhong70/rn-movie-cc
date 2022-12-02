@@ -47,6 +47,7 @@ const Movies = () => {
       overview={item.overview}
       voteAverage={item.vote_average}
       releaseDate={item.release_date}
+      fullData={item}
     />
   );
   return loading ? (
@@ -82,6 +83,7 @@ const Movies = () => {
                 originalTitle={movie.original_title}
                 voteAverage={movie.vote_average}
                 overview={movie.overview}
+                fullData={movie}
               />
             ))}
           </Swiper>

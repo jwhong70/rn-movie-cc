@@ -3,6 +3,7 @@ import styled from "styled-components/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useColorScheme } from "react-native";
 import { BLACK_COLOR } from "./../colors";
+import Detail from "../screens/Detail";
 
 const Stack = () => {
   const Stack = createNativeStackNavigator();

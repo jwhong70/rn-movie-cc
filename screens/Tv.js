@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components/native";
 import Loader from "./../components/Loader";
 import { ScrollView } from "react-native";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { tvApi } from "../api";
+import HList from "./../components/HList";
+import { RefreshControl } from "react-native";
 
 const Tv = () => {
   const { isLoading: trendingLoading, data: trendingData } = useQuery(
@@ -25,6 +28,19 @@ const Tv = () => {
     await queryClient.refetchQueries(["tv"]);
     setRefreshing(false);
   };
-  return loading ? <Loader /> : <ScrollView></ScrollView>;
+  return loading ? (
+    <Loader />
+  ) : (
+    <ScrollView
+      contentContainerStyle={{ paddingVertical: 30 }}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }
+    >
+      <HList title="Trending TV" data={trendingData.results} />
+      <HList title="Airing Today" data={todayData.results} />
+      <HList title="Top Rated TV" data={topData.results} />
+    </ScrollView>
+  );
 };
 export default Tv;

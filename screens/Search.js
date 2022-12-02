@@ -1,7 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components/native";
 
+const Container = styled.ScrollView``;
+const SearchBar = styled.TextInput`
+  background-color: white;
+  padding: 10px 15px;
+  border-radius: 15px;
+  width: 90%;
+  margin: 10px auto;
+  margin-bottom: 40px;
+`;
+
 const Search = () => {
-  return null;
+  const [query, setQuery] = useState("");
+  const onChangeText = (text) => setQuery(text);
+  return (
+    <Container>
+      <SearchBar
+        placeholder="Search for Movie or TV Show"
+        placeholderTextColor="grey"
+        returnKeyType="search"
+        onChangeText={onChangeText}
+      />
+    </Container>
+  );
 };
 export default Search;
